@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>شاورما الخيال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--wine:#7a1f2b;--wine2:#a82a3a;--gold:#d4a23a;--gold2:#f5cd6d;--cream:#fbf3e7;--char:#2a1c1e;--rose:#e8b4a0}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--char);overflow-x:hidden}
+input{font-size:16px}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes riseUp{0%{opacity:0;transform:translateY(28px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes fadeScale{0%{opacity:0;transform:scale(.7)}100%{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes offpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+
+/* ===== الهيدر العلوي الثابت ===== */
+.topbar{position:sticky;top:0;z-index:60;background:var(--wine);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;box-shadow:0 2px 14px rgba(0,0,0,.25)}
+.tb-brand{display:flex;align-items:center;gap:10px}
+.tb-logo{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--wine2),var(--char));display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--gold)}
+.tb-name{color:#fff;font-weight:900;font-size:18px}
+.tb-actions{display:flex;align-items:center;gap:14px}
+.tb-btn{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;font-weight:800}
+.tb-lang{font-size:14px;font-weight:800;color:var(--gold2)}
+
+/* ===== البنر الترحيبي ===== */
+.welcome{position:relative;height:230px;background:linear-gradient(160deg,var(--wine) 0%,var(--char) 100%);overflow:hidden;display:flex;align-items:flex-end}
+.welcome::before{content:"🌯";position:absolute;font-size:200px;opacity:.08;left:-30px;top:-20px;transform:rotate(-15deg)}
+.welcome::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(212,162,58,.25),transparent 50%)}
+.welcome-inner{position:relative;z-index:2;padding:0 20px 22px;width:100%}
+.welcome-title{color:#fff;font-size:30px;font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.5);margin-bottom:4px}
+.welcome-sub{color:var(--gold2);font-size:14px;font-weight:700;margin-bottom:14px}
+.social-row{display:flex;gap:12px}
+.soc{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.3);transition:.2s}
+.soc:active{transform:scale(.88)}
+.soc.call{background:linear-gradient(135deg,#2a7,#3b9)}
+.soc.insta{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+.soc.wa{background:linear-gradient(135deg,#128C7E,#25D366)}
+.soc.tiktok{background:linear-gradient(135deg,#010101,#69C9D0,#EE1D52)}
+.soc.map{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+.welcome-info{position:absolute;top:16px;left:20px;z-index:2;text-align:left}
+.wi-line{color:rgba(255,255,255,.85);font-size:11px;margin-bottom:3px}
+
+/* زر العروض */
+.offers-bar{padding:16px 16px 0}
+.offers-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--wine2),#d4663a);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:16px;padding:14px;border-radius:16px;cursor:pointer;box-shadow:0 6px 22px rgba(168,42,58,.45);animation:offpulse 2.5s ease-in-out infinite}
+.offers-btn .pill{background:#fff;color:var(--wine2);font-size:12px;font-weight:800;padding:2px 9px;border-radius:20px}
+.offers-btn:active{transform:scale(.97)}
+
+/* ===== بطاقات الأقسام ===== */
+.cats-wrap{padding:18px 16px 6px}
+.cats-title{font-size:18px;font-weight:900;color:var(--wine);margin-bottom:12px}
+.cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cat-card{background:#fff;border:2px solid transparent;border-radius:18px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.25s;box-shadow:0 3px 12px rgba(122,31,43,.08);font-family:inherit}
+.cat-card .cat-icon{font-size:34px}
+.cat-card .cat-name{font-weight:800;font-size:13px;color:var(--char)}
+.cat-card .cat-count{font-size:10px;color:#aaa;font-weight:600}
+.cat-card.active{border-color:var(--gold);background:linear-gradient(160deg,#fff,#fdf4e3);transform:translateY(-3px);box-shadow:0 8px 20px rgba(212,162,58,.25)}
+
+/* ===== شريط التبويبات اللاصق ===== */
+.tabs{position:sticky;top:66px;z-index:50;background:rgba(251,243,231,.97);backdrop-filter:blur(8px);padding:12px 8px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(122,31,43,.08)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:#fff;color:var(--char);border:1px solid rgba(122,31,43,.15);font-family:inherit;font-weight:700;font-size:13px;padding:8px 14px;border-radius:30px;cursor:pointer;transition:.2s;white-space:nowrap}
+.tab.active{background:var(--wine);color:#fff;border-color:var(--wine)}
+
+/* البحث */
+.search-bar{padding:14px 16px 4px}
+.search-bar input{width:100%;padding:13px 18px;border:2px solid rgba(122,31,43,.12);border-radius:30px;font-family:inherit;font-size:15px;background:#fff;outline:none;transition:.2s}
+.search-bar input:focus{border-color:var(--gold)}
+
+/* ===== الأقسام: مخفية افتراضياً، تظهر القسم المختار ===== */
+.menu-section{display:none;padding:14px 16px 4px}
+.menu-section.show-cat{display:block;animation:fadeIn .4s ease}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:3px solid var(--gold);padding-bottom:8px}
+.sec-title{font-size:21px;font-weight:900;color:var(--wine);display:flex;align-items:center;gap:8px}
+.sec-emoji{font-size:23px}
+.view-toggle{display:flex;background:#fff;border-radius:12px;padding:3px;gap:2px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.vt-btn{width:36px;height:36px;border:none;background:transparent;border-radius:9px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.2s;color:#999}
+.vt-btn.active{background:var(--wine);color:#fff}
+
+.cards.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cards.list{display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 14px rgba(122,31,43,.08);border:1px solid rgba(122,31,43,.05);opacity:0;transform:translateY(14px);transition:.45s;display:flex;flex-direction:column}
+.card.show{opacity:1;transform:translateY(0)}
+.card-img{position:relative;height:120px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-img::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.25),transparent 60%)}
+.card-icon{font-size:56px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));z-index:1}
+.add-btn{position:absolute;top:10px;right:10px;z-index:3;width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.95);color:var(--wine);font-size:26px;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.add-btn:active{transform:scale(.8);background:var(--gold);color:#fff}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1}
+.card-name{font-weight:800;font-size:15px;color:var(--char);margin-bottom:4px}
+.card-desc{font-size:11.5px;color:#998;line-height:1.5;margin-bottom:10px;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:flex-start;gap:6px}
+.card-price{font-weight:900;font-size:16px;color:var(--wine2)}
+.card-price span{font-size:10px;color:#aaa;font-weight:600}
+.cards.list .card{flex-direction:row}
+.cards.list .card-img{width:110px;flex:0 0 110px;height:auto}
+.cards.list .card-icon{font-size:44px}
+
+/* السلة */
+.cart-fab{position:fixed;bottom:74px;left:16px;z-index:65;width:60px;height:60px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(212,162,58,.55);display:flex;align-items:center;justify-content:center;font-size:26px;transition:.2s}
+.cart-fab:active{transform:scale(.9)}
+.cart-count{position:absolute;top:-4px;right:-4px;background:var(--wine2);color:#fff;font-size:12px;font-weight:800;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--cream)}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;opacity:0;pointer-events:none;transition:.3s}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-panel{position:fixed;bottom:0;left:0;right:0;z-index:80;background:var(--cream);border-radius:24px 24px 0 0;max-height:82vh;transform:translateY(100%);transition:.35s;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.35)}
+.cart-panel.open{transform:translateY(0)}
+.cart-head{padding:18px 18px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(122,31,43,.08)}
+.cart-head h3{font-size:19px;font-weight:900;color:var(--wine)}
+.cart-close{background:rgba(122,31,43,.08);border:none;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;color:var(--wine)}
+.cart-scroll{flex:1;overflow-y:auto}
+.cart-items{padding:12px 18px}
+.cart-empty{text-align:center;color:#999;padding:40px 0;font-size:15px}
+.ci{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(122,31,43,.06)}
+.ci-img{flex:0 0 54px;width:54px;height:54px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.ci-info{flex:1}.ci-name{font-weight:700;font-size:14px;color:var(--char)}
+.ci-price{font-size:13px;color:var(--wine2);font-weight:700;margin-top:2px}
+.ci-qty{display:flex;align-items:center;gap:8px}
+.qbtn{width:32px;height:32px;border-radius:50%;border:none;background:var(--wine);color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.qbtn:active{transform:scale(.85)}.qnum{font-weight:800;min-width:22px;text-align:center;font-size:15px}
+.ci-del{background:none;border:none;color:var(--wine2);font-size:20px;cursor:pointer;margin-inline-start:2px;opacity:.6}
+.ci-del:active{opacity:1}
+
+/* أكمل طلبك */
+.suggest-wrap{padding:14px 18px;background:linear-gradient(160deg,rgba(212,162,58,.08),transparent);border-top:1px solid rgba(122,31,43,.06)}
+.suggest-title{font-weight:900;font-size:15px;color:var(--wine);margin-bottom:10px}
+.suggest-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.suggest-row::-webkit-scrollbar{display:none}
+.sug-card{flex:0 0 120px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid rgba(122,31,43,.05)}
+.sug-img{height:70px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.sug-body{padding:8px 10px}
+.sug-name{font-weight:700;font-size:12px;color:var(--char);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug-foot{display:flex;align-items:center;justify-content:space-between;margin-top:5px}
+.sug-price{font-size:11px;font-weight:800;color:var(--wine2)}
+.sug-add{width:26px;height:26px;border-radius:50%;border:none;background:var(--wine);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sug-add:active{transform:scale(.85);background:var(--gold)}
+
+/* حقول البيانات */
+.cart-form{padding:14px 18px 6px;border-top:1px solid rgba(122,31,43,.06)}
+.cf-field{margin-bottom:12px}
+.cf-field label{display:block;font-weight:800;font-size:13px;color:var(--char);margin-bottom:6px}
+.cf-field input,.cf-field textarea{width:100%;padding:12px 14px;border:2px solid rgba(122,31,43,.12);border-radius:12px;font-family:inherit;font-size:15px;background:#fff;outline:none;transition:.2s}
+.cf-field input:focus,.cf-field textarea:focus{border-color:var(--gold)}
+.cf-field textarea{resize:none;height:70px}
+
+.checkout-call{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;background:rgba(122,31,43,.1);color:var(--wine);text-decoration:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:14px;transition:.2s}
+.checkout-call:active{transform:scale(.97)}
+.cart-foot{padding:14px 18px 22px;border-top:2px solid rgba(122,31,43,.08);background:#fff}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:18px;font-weight:900;color:var(--wine)}
+.cart-note{font-size:12px;color:#888;margin-bottom:12px}
+.checkout{width:100%;background:#25D366;color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:15px;border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.checkout:active{transform:scale(.97)}
+
+/* العروض */
+.offers-overlay{position:fixed;inset:0;background:rgba(20,10,12,.78);backdrop-filter:blur(3px);z-index:90;opacity:0;pointer-events:none;transition:.3s}
+.offers-overlay.open{opacity:1;pointer-events:auto}
+.offers-panel{position:fixed;bottom:0;left:0;right:0;z-index:100;background:linear-gradient(160deg,var(--wine),var(--char));border-radius:26px 26px 0 0;max-height:90vh;transform:translateY(100%);transition:.4s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.5);border-top:2px solid var(--gold)}
+.offers-panel.open{transform:translateY(0)}
+.offers-head{padding:20px 18px 8px;display:flex;align-items:center;justify-content:space-between}
+.offers-head h3{font-size:21px;font-weight:900;color:var(--gold)}
+.offers-close{background:rgba(255,255,255,.12);border:none;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;color:#fff}
+.offers-sub{padding:0 18px 14px;color:rgba(255,255,255,.65);font-size:12.5px;line-height:1.6;border-bottom:1px solid rgba(212,162,58,.2)}
+.offers-scroll{flex:1;overflow-y:auto;padding:16px 18px 26px}
+.offers-grid{display:flex;flex-direction:column;gap:14px}
+.offer-card{position:relative;background:linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-radius:18px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.3);border:1.5px solid rgba(212,162,58,.4);display:flex;align-items:stretch}
+.offer-icon{flex:0 0 80px;display:flex;align-items:center;justify-content:center;font-size:46px;background:linear-gradient(135deg,rgba(212,162,58,.25),rgba(168,42,58,.25))}
+.offer-body{padding:14px 16px;flex:1}
+.offer-badge{display:inline-block;background:var(--wine2);color:#fff;font-weight:800;font-size:11px;padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.offer-name{color:var(--gold);font-size:17px;font-weight:900;margin-bottom:5px}
+.offer-desc{color:rgba(255,255,255,.85);font-size:12.5px;line-height:1.6;margin-bottom:12px}
+.offer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.offer-price{color:#fff;font-size:19px;font-weight:900}
+.offer-price span{font-size:11px;color:var(--gold2);font-weight:700}
+.offer-add{background:var(--gold);color:var(--char);border:none;font-family:inherit;font-weight:800;font-size:12px;padding:9px 16px;border-radius:30px;cursor:pointer}
+.offer-add:active{transform:scale(.9)}
+
+/* الشريط السفلي */
+.bottombar{position:fixed;bottom:0;left:0;right:0;z-index:55;background:var(--char);display:flex;justify-content:space-around;padding:8px 4px;box-shadow:0 -4px 16px rgba(0,0,0,.25)}
+.bb{flex:1;text-align:center;color:#fff;text-decoration:none;font-size:11px;font-weight:600;padding:4px}
+.bb .ic{font-size:20px;display:block;margin-bottom:2px}
+.bb:active{opacity:.6}
+
+.fly{position:fixed;width:24px;height:24px;border-radius:50%;background:var(--gold);z-index:200;pointer-events:none;transition:all .7s cubic-bezier(.5,-0.3,.7,1)}
+/* ===== (9) مؤشر التمرير العلوي ===== */
+.scroll-progress{position:fixed;top:0;right:0;height:4px;width:0;z-index:200;background:linear-gradient(90deg,var(--gold),var(--gold2));box-shadow:0 0 8px rgba(212,162,58,.6);transition:width .1s}
+
+/* ===== (1) خلفية متحركة بالهيدر ===== */
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.9;transform:scale(1.15)}}
+@keyframes floatUp{0%{transform:translateY(40px);opacity:0}15%{opacity:.6}85%{opacity:.4}100%{transform:translateY(-180px);opacity:0}}
+.welcome .glow1,.welcome .glow2{position:absolute;border-radius:50%;filter:blur(40px);z-index:1}
+.welcome .glow1{width:160px;height:160px;background:rgba(212,162,58,.4);top:-30px;right:10%;animation:breathe 5s ease-in-out infinite}
+.welcome .glow2{width:130px;height:130px;background:rgba(168,42,58,.45);bottom:-20px;left:15%;animation:breathe 6s ease-in-out infinite 1s}
+.particle{position:absolute;bottom:20px;width:6px;height:6px;border-radius:50%;background:rgba(255,210,110,.7);z-index:1;animation:floatUp linear infinite}
+
+/* ===== (5) شارة مفتوح + عدّاد ===== */
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(46,204,113,.2);border:1px solid rgba(46,204,113,.5);color:#7fffb0;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;margin-bottom:6px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#2ecc71;animation:livepulse 1.5s ease-in-out infinite}
+@keyframes livepulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(46,204,113,.7)}50%{opacity:.7;box-shadow:0 0 0 6px rgba(46,204,113,0)}}
+.live-orders{color:var(--gold2)!important;font-weight:700}
+
+/* ===== (4) شارات الأصناف ===== */
+.card-badge{position:absolute;top:10px;left:10px;z-index:3;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:10px;font-weight:800;padding:4px 9px;border-radius:20px;animation:badgeFloat 2.5s ease-in-out infinite}
+@keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+/* ===== (6) شريط الأكثر مبيعاً ===== */
+.best-wrap{padding:16px 0 6px;overflow:hidden}
+.best-title{font-size:18px;font-weight:900;color:var(--wine);padding:0 16px;margin-bottom:12px}
+.best-track{display:flex;gap:12px;padding:0 16px;animation:scrollBest 26s linear infinite;width:max-content}
+.best-track:hover,.best-track:active{animation-play-state:paused}
+@keyframes scrollBest{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
+.best-card{flex:0 0 130px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(122,31,43,.12);border:1.5px solid rgba(212,162,58,.3);cursor:pointer;transition:.2s}
+.best-card:active{transform:scale(.94)}
+.best-img{position:relative;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;background:linear-gradient(135deg,var(--wine),var(--char))}
+.best-fire{position:absolute;top:6px;left:6px;font-size:16px;animation:badgeFloat 2s ease-in-out infinite}
+.best-name{font-weight:800;font-size:13px;color:var(--char);padding:8px 10px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.best-price{font-weight:900;font-size:13px;color:var(--wine2);padding:2px 10px 10px}
+
+/* ===== (3) ripple + نجوم ===== */
+.ripple{position:absolute;border-radius:50%;background:rgba(212,162,58,.4);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none;z-index:5}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+.spark{position:fixed;font-size:18px;z-index:201;pointer-events:none;animation:sparkFly .8s ease-out forwards}
+@keyframes sparkFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(.3)}}
+
+/* ===== (8) زر عروض بشرارة ===== */
+.offers-btn{position:relative;overflow:hidden}
+.offers-btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:sweep 3.5s ease-in-out infinite}
+@keyframes sweep{0%{left:-60%}55%{left:130%}100%{left:130%}}
+
+/* ===== (10) الوضع الليلي ===== */
+body.dark{--cream:#1a1416;--char:#f0e6d8}
+body.dark .topbar{background:#3a1820}
+body.dark .card,body.dark .cat-card,body.dark .best-card,body.dark .view-toggle,body.dark .tab,body.dark .search-bar input,body.dark .cart-panel,body.dark .cart-foot,body.dark .cf-field input,body.dark .cf-field textarea,body.dark .sug-card{background:#2a2024}
+body.dark .card-name,body.dark .cat-card .cat-name,body.dark .best-name,body.dark .sug-name,body.dark .ci-name,body.dark .cf-field label,body.dark .cats-title{color:#f0e6d8}
+body.dark .card-desc{color:#aaa}
+body.dark .tabs{background:rgba(26,20,22,.97)}
+body.dark footer{background:#1a1416}
+
+footer{padding:50px 16px 90px;text-align:center;color:var(--wine);background:var(--cream)}
+footer .ft-logo{font-weight:900;font-size:18px;color:var(--wine);margin-bottom:4px}
+.dev-sign{margin-top:16px;font-size:11px;color:rgba(122,31,43,.4)}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- الهيدر العلوي -->
+<div class="topbar">
+  <div class="tb-brand">
+    <div class="tb-logo">🌯</div>
+    <span class="tb-name">شاورما الخيال</span>
+  </div>
+  <div class="tb-actions">
+    <button class="tb-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+    <button class="tb-btn" onclick="toggleSearch()">🔍</button>
+    <span class="tb-lang">EN</span>
+    <button class="tb-btn" onclick="openSocial()">👤</button>
+  </div>
+</div>
+
+<!-- البنر الترحيبي -->
+<div class="welcome">
+  <div class="glow1"></div><div class="glow2"></div>
+  <div class="particle" style="right:20%;animation-duration:7s;animation-delay:0s"></div>
+  <div class="particle" style="right:45%;animation-duration:9s;animation-delay:2s"></div>
+  <div class="particle" style="right:65%;animation-duration:6s;animation-delay:1s"></div>
+  <div class="particle" style="right:80%;animation-duration:8s;animation-delay:3s"></div>
+  <div class="particle" style="right:35%;animation-duration:10s;animation-delay:4s"></div>
+  <div class="welcome-info">
+    <div class="live-badge"><span class="live-dot"></span> مفتوح الآن</div>
+    <div class="wi-line">🕒 11:00 ص - 1:00 بعد منتصف الليل</div>
+    <div class="wi-line">🛵 توصيل سريع خلال 30 دقيقة</div>
+    <div class="wi-line live-orders">🛵 <span id="orderCount">0</span>+ طلب اليوم</div>
+  </div>
+  <div class="welcome-inner">
+    <div class="welcome-title">مرحباً بكم 👋</div>
+    <div class="welcome-sub">حيث يبدأ الطعم الحقيقي</div>
+    <div class="social-row">
+      <a class="soc call" href="tel:07700000000">📞</a>
+      <a class="soc wa" href="https://wa.me/9647700000000" target="_blank">💬</a>
+      <a class="soc insta" href="https://instagram.com/" target="_blank">📷</a>
+      <a class="soc tiktok" href="https://tiktok.com/" target="_blank">🎵</a>
+      <a class="soc map" href="https://maps.google.com/?q=33.3152,44.3661" target="_blank">📍</a>
+    </div>
+  </div>
+</div>
+
+<!-- زر العروض -->
+<div class="offers-bar">
+  <button class="offers-btn" onclick="openOffers()">🔥 شوف العروض <span class="pill">4 عروض</span></button>
+</div>
+
+<!-- بطاقات الأقسام -->
+<div class="cats-wrap">
+  <div class="cats-title">📋 اختر القسم</div>
+  <div class="cats">
+      <button class="cat-card" onclick="showCat('shawarma')" data-cat="shawarma">
+        <span class="cat-icon">🌯</span>
+        <span class="cat-name">الشاورما</span>
+        <span class="cat-count">6 صنف</span>
+      </button>
+      <button class="cat-card" onclick="showCat('sandwich')" data-cat="sandwich">
+        <span class="cat-icon">🥙</span>
+        <span class="cat-name">الساندويتشات</span>
+        <span class="cat-count">5 صنف</span>
+      </button>
+      <button class="cat-card" onclick="showCat('plates')" data-cat="plates">
+        <span class="cat-icon">🍽️</span>
+        <span class="cat-name">الأطباق</span>
+        <span class="cat-count">5 صنف</span>
+      </button>
+      <button class="cat-card" onclick="showCat('sides')" data-cat="sides">
+        <span class="cat-icon">🍟</span>
+        <span class="cat-name">الإضافات</span>
+        <span class="cat-count">5 صنف</span>
+      </button>
+      <button class="cat-card" onclick="showCat('drinks')" data-cat="drinks">
+        <span class="cat-icon">🥤</span>
+        <span class="cat-name">المشروبات</span>
+        <span class="cat-count">5 صنف</span>
+      </button>
+  </div>
+</div>
+
+<!-- شريط الأكثر مبيعاً -->
+
+    <div class="best-wrap">
+      <div class="best-title">⭐ الأكثر مبيعاً</div>
+      <div class="best-track">
+        <div class="best-card" onclick="addToCart('شاورما دجاج',3000,'🌯',this)">
+          <div class="best-img">🌯<span class="best-fire">🔥</span></div>
+          <div class="best-name">شاورما دجاج</div>
+          <div class="best-price">3،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('طبق مشاوي مشكل',12000,'🍢',this)">
+          <div class="best-img">🍢<span class="best-fire">🔥</span></div>
+          <div class="best-name">طبق مشاوي مشكل</div>
+          <div class="best-price">12،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('شاورما مكس',4500,'🌯',this)">
+          <div class="best-img">🌯<span class="best-fire">⭐</span></div>
+          <div class="best-name">شاورما مكس</div>
+          <div class="best-price">4،500 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('صحن شاورما لحم',7500,'🍛',this)">
+          <div class="best-img">🍛<span class="best-fire">👑</span></div>
+          <div class="best-name">صحن شاورما لحم</div>
+          <div class="best-price">7،500 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('قوزي عراقي',13000,'🍛',this)">
+          <div class="best-img">🍛<span class="best-fire">👑</span></div>
+          <div class="best-name">قوزي عراقي</div>
+          <div class="best-price">13،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('ساندويتش زنجر',3500,'🥪',this)">
+          <div class="best-img">🥪<span class="best-fire">🆕</span></div>
+          <div class="best-name">ساندويتش زنجر</div>
+          <div class="best-price">3،500 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('شاورما دجاج',3000,'🌯',this)">
+          <div class="best-img">🌯<span class="best-fire">🔥</span></div>
+          <div class="best-name">شاورما دجاج</div>
+          <div class="best-price">3،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('طبق مشاوي مشكل',12000,'🍢',this)">
+          <div class="best-img">🍢<span class="best-fire">🔥</span></div>
+          <div class="best-name">طبق مشاوي مشكل</div>
+          <div class="best-price">12،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('شاورما مكس',4500,'🌯',this)">
+          <div class="best-img">🌯<span class="best-fire">⭐</span></div>
+          <div class="best-name">شاورما مكس</div>
+          <div class="best-price">4،500 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('صحن شاورما لحم',7500,'🍛',this)">
+          <div class="best-img">🍛<span class="best-fire">👑</span></div>
+          <div class="best-name">صحن شاورما لحم</div>
+          <div class="best-price">7،500 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('قوزي عراقي',13000,'🍛',this)">
+          <div class="best-img">🍛<span class="best-fire">👑</span></div>
+          <div class="best-name">قوزي عراقي</div>
+          <div class="best-price">13،000 د.ع</div>
+        </div>
+        <div class="best-card" onclick="addToCart('ساندويتش زنجر',3500,'🥪',this)">
+          <div class="best-img">🥪<span class="best-fire">🆕</span></div>
+          <div class="best-name">ساندويتش زنجر</div>
+          <div class="best-price">3،500 د.ع</div>
+        </div>
+      </div>
+    </div>
+
+<!-- شريط التبويبات -->
+<div class="tabs" id="tabs"><button class="tab active" data-cat="shawarma" onclick="showCat('shawarma')">🌯 الشاورما</button><button class="tab " data-cat="sandwich" onclick="showCat('sandwich')">🥙 الساندويتشات</button><button class="tab " data-cat="plates" onclick="showCat('plates')">🍽️ الأطباق</button><button class="tab " data-cat="sides" onclick="showCat('sides')">🍟 الإضافات</button><button class="tab " data-cat="drinks" onclick="showCat('drinks')">🥤 المشروبات</button></div>
+
+<!-- البحث -->
+<div class="search-bar" id="searchBar" style="display:none">
+  <input type="text" id="search" placeholder="🔍 دور على وجبة..." oninput="doSearch(this.value)">
+</div>
+
+<main id="main">
+
+    <section class="menu-section show-cat" id="sec-shawarma" data-cat="shawarma">
+      <div class="sec-head">
+        <h2 class="sec-title"><span class="sec-emoji">🌯</span> الشاورما</h2>
+        <div class="view-toggle">
+          <button class="vt-btn active" onclick="setView('grid',this)">⊞</button>
+          <button class="vt-btn" onclick="setView('list',this)">☰</button>
+        </div>
+      </div>
+      <div class="cards grid">
+      <div class="card" data-name="شاورما دجاج" data-price="3000">
+        <div class="card-img" style="background:linear-gradient(135deg,#7a1f2b,#a82a3a)">
+          <span class="card-badge">🔥 الأكثر طلباً</span>
+          <button class="add-btn" onclick="addToCart('شاورما دجاج',3000,'🌯',this)">+</button>
+          <span class="card-icon">🌯</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">شاورما دجاج</div>
+          <div class="card-desc">صدر دجاج متبّل مشوي مع ثوم وخضار وبطاطا</div>
+          <div class="card-foot"><div class="card-price">3،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="شاورما لحم" data-price="4000">
+        <div class="card-img" style="background:linear-gradient(135deg,#c9842b,#e8a83d)">
+          
+          <button class="add-btn" onclick="addToCart('شاورما لحم',4000,'🌯',this)">+</button>
+          <span class="card-icon">🌯</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">شاورما لحم</div>
+          <div class="card-desc">لحم غنم طري مع طحينة وخضار طازجة</div>
+          <div class="card-foot"><div class="card-price">4،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="شاورما مكس" data-price="4500">
+        <div class="card-img" style="background:linear-gradient(135deg,#2a1c1e,#5a3a3e)">
+          <span class="card-badge">⭐ مميز</span>
+          <button class="add-btn" onclick="addToCart('شاورما مكس',4500,'🌯',this)">+</button>
+          <span class="card-icon">🌯</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">شاورما مكس</div>
+          <div class="card-desc">خليط دجاج ولحم مع صلصة الخيال الخاصة</div>
+          <div class="card-foot"><div class="card-price">4،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="شاورما عربي" data-price="3500">
+        <div class="card-img" style="background:linear-gradient(135deg,#9a6b2f,#d4a23a)">
+          <span class="card-badge">🌶️ حار</span>
+          <button class="add-btn" onclick="addToCart('شاورما عربي',3500,'🌮',this)">+</button>
+          <span class="card-icon">🌮</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">شاورما عربي</div>
+          <div class="card-desc">شاورما دجاج بخبز عربي مع بطاطا ومخلل</div>
+          <div class="card-foot"><div class="card-price">3،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="صحن شاورما دجاج" data-price="6000">
+        <div class="card-img" style="background:linear-gradient(135deg,#8a2433,#c44a3a)">
+          
+          <button class="add-btn" onclick="addToCart('صحن شاورما دجاج',6000,'🍛',this)">+</button>
+          <span class="card-icon">🍛</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">صحن شاورما دجاج</div>
+          <div class="card-desc">صحن شاورما دجاج مع رز وخضار وصلصة</div>
+          <div class="card-foot"><div class="card-price">6،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="صحن شاورما لحم" data-price="7500">
+        <div class="card-img" style="background:linear-gradient(135deg,#3a2a1e,#7a5a2f)">
+          <span class="card-badge">👑 فاخر</span>
+          <button class="add-btn" onclick="addToCart('صحن شاورما لحم',7500,'🍛',this)">+</button>
+          <span class="card-icon">🍛</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">صحن شاورما لحم</div>
+          <div class="card-desc">صحن شاورما لحم فاخر مع رز بخاري</div>
+          <div class="card-foot"><div class="card-price">7،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="menu-section " id="sec-sandwich" data-cat="sandwich">
+      <div class="sec-head">
+        <h2 class="sec-title"><span class="sec-emoji">🥙</span> الساندويتشات</h2>
+        <div class="view-toggle">
+          <button class="vt-btn active" onclick="setView('grid',this)">⊞</button>
+          <button class="vt-btn" onclick="setView('list',this)">☰</button>
+        </div>
+      </div>
+      <div class="cards grid">
+      <div class="card" data-name="ساندويتش فلافل" data-price="1500">
+        <div class="card-img" style="background:linear-gradient(135deg,#7a1f2b,#a82a3a)">
+          
+          <button class="add-btn" onclick="addToCart('ساندويتش فلافل',1500,'🥙',this)">+</button>
+          <span class="card-icon">🥙</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ساندويتش فلافل</div>
+          <div class="card-desc">فلافل مقرمشة مع طحينة وخضار</div>
+          <div class="card-foot"><div class="card-price">1،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ساندويتش زنجر" data-price="3500">
+        <div class="card-img" style="background:linear-gradient(135deg,#c9842b,#e8a83d)">
+          <span class="card-badge">🆕 جديد</span>
+          <button class="add-btn" onclick="addToCart('ساندويتش زنجر',3500,'🥪',this)">+</button>
+          <span class="card-icon">🥪</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ساندويتش زنجر</div>
+          <div class="card-desc">قطع دجاج مقرمشة مع صوص حار</div>
+          <div class="card-foot"><div class="card-price">3،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ساندويتش برجر دجاج" data-price="4000">
+        <div class="card-img" style="background:linear-gradient(135deg,#2a1c1e,#5a3a3e)">
+          
+          <button class="add-btn" onclick="addToCart('ساندويتش برجر دجاج',4000,'🍔',this)">+</button>
+          <span class="card-icon">🍔</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ساندويتش برجر دجاج</div>
+          <div class="card-desc">برجر دجاج مع جبن وخضار</div>
+          <div class="card-foot"><div class="card-price">4،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ساندويتش برجر لحم" data-price="4500">
+        <div class="card-img" style="background:linear-gradient(135deg,#9a6b2f,#d4a23a)">
+          
+          <button class="add-btn" onclick="addToCart('ساندويتش برجر لحم',4500,'🍔',this)">+</button>
+          <span class="card-icon">🍔</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ساندويتش برجر لحم</div>
+          <div class="card-desc">برجر لحم بقري مشوي مع جبن شيدر</div>
+          <div class="card-foot"><div class="card-price">4،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ساندويتش كباب" data-price="4000">
+        <div class="card-img" style="background:linear-gradient(135deg,#8a2433,#c44a3a)">
+          
+          <button class="add-btn" onclick="addToCart('ساندويتش كباب',4000,'🥙',this)">+</button>
+          <span class="card-icon">🥙</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ساندويتش كباب</div>
+          <div class="card-desc">كباب لحم مشوي مع خضار وصلصة</div>
+          <div class="card-foot"><div class="card-price">4،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="menu-section " id="sec-plates" data-cat="plates">
+      <div class="sec-head">
+        <h2 class="sec-title"><span class="sec-emoji">🍽️</span> الأطباق</h2>
+        <div class="view-toggle">
+          <button class="vt-btn active" onclick="setView('grid',this)">⊞</button>
+          <button class="vt-btn" onclick="setView('list',this)">☰</button>
+        </div>
+      </div>
+      <div class="cards grid">
+      <div class="card" data-name="طبق مشاوي مشكل" data-price="12000">
+        <div class="card-img" style="background:linear-gradient(135deg,#3a2a1e,#7a5a2f)">
+          <span class="card-badge">🔥 الأكثر طلباً</span>
+          <button class="add-btn" onclick="addToCart('طبق مشاوي مشكل',12000,'🍢',this)">+</button>
+          <span class="card-icon">🍢</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">طبق مشاوي مشكل</div>
+          <div class="card-desc">كباب وتكه ودجاج مع رز وخضار</div>
+          <div class="card-foot"><div class="card-price">12،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="طبق كباب" data-price="9000">
+        <div class="card-img" style="background:linear-gradient(135deg,#7a1f2b,#a82a3a)">
+          
+          <button class="add-btn" onclick="addToCart('طبق كباب',9000,'🍖',this)">+</button>
+          <span class="card-icon">🍖</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">طبق كباب</div>
+          <div class="card-desc">كباب لحم طازج مع رز بخاري وسلطة</div>
+          <div class="card-foot"><div class="card-price">9،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="طبق تكه دجاج" data-price="8000">
+        <div class="card-img" style="background:linear-gradient(135deg,#c9842b,#e8a83d)">
+          
+          <button class="add-btn" onclick="addToCart('طبق تكه دجاج',8000,'🍗',this)">+</button>
+          <span class="card-icon">🍗</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">طبق تكه دجاج</div>
+          <div class="card-desc">تكه دجاج مشوية مع رز وصلصة خاصة</div>
+          <div class="card-foot"><div class="card-price">8،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="قوزي عراقي" data-price="13000">
+        <div class="card-img" style="background:linear-gradient(135deg,#2a1c1e,#5a3a3e)">
+          <span class="card-badge">👑 فاخر</span>
+          <button class="add-btn" onclick="addToCart('قوزي عراقي',13000,'🍛',this)">+</button>
+          <span class="card-icon">🍛</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">قوزي عراقي</div>
+          <div class="card-desc">قوزي لحم مع رز ومكسرات وزبيب</div>
+          <div class="card-foot"><div class="card-price">13،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="طبق ريزو" data-price="5500">
+        <div class="card-img" style="background:linear-gradient(135deg,#9a6b2f,#d4a23a)">
+          
+          <button class="add-btn" onclick="addToCart('طبق ريزو',5500,'🍚',this)">+</button>
+          <span class="card-icon">🍚</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">طبق ريزو</div>
+          <div class="card-desc">رز بالدجاج المقرمش وصلصة كريمية</div>
+          <div class="card-foot"><div class="card-price">5،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="menu-section " id="sec-sides" data-cat="sides">
+      <div class="sec-head">
+        <h2 class="sec-title"><span class="sec-emoji">🍟</span> الإضافات</h2>
+        <div class="view-toggle">
+          <button class="vt-btn active" onclick="setView('grid',this)">⊞</button>
+          <button class="vt-btn" onclick="setView('list',this)">☰</button>
+        </div>
+      </div>
+      <div class="cards grid">
+      <div class="card" data-name="بطاطا مقلية" data-price="2000">
+        <div class="card-img" style="background:linear-gradient(135deg,#8a2433,#c44a3a)">
+          
+          <button class="add-btn" onclick="addToCart('بطاطا مقلية',2000,'🍟',this)">+</button>
+          <span class="card-icon">🍟</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">بطاطا مقلية</div>
+          <div class="card-desc">بطاطا ذهبية مقرمشة</div>
+          <div class="card-foot"><div class="card-price">2،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="بطاطا بالجبن" data-price="3000">
+        <div class="card-img" style="background:linear-gradient(135deg,#3a2a1e,#7a5a2f)">
+          <span class="card-badge">⭐ مميز</span>
+          <button class="add-btn" onclick="addToCart('بطاطا بالجبن',3000,'🧀',this)">+</button>
+          <span class="card-icon">🧀</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">بطاطا بالجبن</div>
+          <div class="card-desc">بطاطا مع جبن موزاريلا ذائب</div>
+          <div class="card-foot"><div class="card-price">3،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="حمص بطحينة" data-price="2000">
+        <div class="card-img" style="background:linear-gradient(135deg,#7a1f2b,#a82a3a)">
+          
+          <button class="add-btn" onclick="addToCart('حمص بطحينة',2000,'🫓',this)">+</button>
+          <span class="card-icon">🫓</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">حمص بطحينة</div>
+          <div class="card-desc">حمص كريمي مع زيت زيتون</div>
+          <div class="card-foot"><div class="card-price">2،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="سلطة خضراء" data-price="1500">
+        <div class="card-img" style="background:linear-gradient(135deg,#c9842b,#e8a83d)">
+          
+          <button class="add-btn" onclick="addToCart('سلطة خضراء',1500,'🥗',this)">+</button>
+          <span class="card-icon">🥗</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">سلطة خضراء</div>
+          <div class="card-desc">خضار طازجة مع صلصة الليمون</div>
+          <div class="card-foot"><div class="card-price">1،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="مقبلات مشكلة" data-price="2500">
+        <div class="card-img" style="background:linear-gradient(135deg,#2a1c1e,#5a3a3e)">
+          
+          <button class="add-btn" onclick="addToCart('مقبلات مشكلة',2500,'🥗',this)">+</button>
+          <span class="card-icon">🥗</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">مقبلات مشكلة</div>
+          <div class="card-desc">تشكيلة مقبلات شرقية</div>
+          <div class="card-foot"><div class="card-price">2،500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="menu-section " id="sec-drinks" data-cat="drinks">
+      <div class="sec-head">
+        <h2 class="sec-title"><span class="sec-emoji">🥤</span> المشروبات</h2>
+        <div class="view-toggle">
+          <button class="vt-btn active" onclick="setView('grid',this)">⊞</button>
+          <button class="vt-btn" onclick="setView('list',this)">☰</button>
+        </div>
+      </div>
+      <div class="cards grid">
+      <div class="card" data-name="بيبسي" data-price="1000">
+        <div class="card-img" style="background:linear-gradient(135deg,#9a6b2f,#d4a23a)">
+          
+          <button class="add-btn" onclick="addToCart('بيبسي',1000,'🥤',this)">+</button>
+          <span class="card-icon">🥤</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">بيبسي</div>
+          <div class="card-desc">علبة بيبسي باردة</div>
+          <div class="card-foot"><div class="card-price">1،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="سفن أب" data-price="1000">
+        <div class="card-img" style="background:linear-gradient(135deg,#8a2433,#c44a3a)">
+          
+          <button class="add-btn" onclick="addToCart('سفن أب',1000,'🥤',this)">+</button>
+          <span class="card-icon">🥤</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">سفن أب</div>
+          <div class="card-desc">علبة سفن أب باردة</div>
+          <div class="card-foot"><div class="card-price">1،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="عصير برتقال طازج" data-price="2000">
+        <div class="card-img" style="background:linear-gradient(135deg,#3a2a1e,#7a5a2f)">
+          
+          <button class="add-btn" onclick="addToCart('عصير برتقال طازج',2000,'🍊',this)">+</button>
+          <span class="card-icon">🍊</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">عصير برتقال طازج</div>
+          <div class="card-desc">عصير برتقال طبيعي 100%</div>
+          <div class="card-foot"><div class="card-price">2،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ليموناضة بالنعناع" data-price="2000">
+        <div class="card-img" style="background:linear-gradient(135deg,#7a1f2b,#a82a3a)">
+          <span class="card-badge">🆕 جديد</span>
+          <button class="add-btn" onclick="addToCart('ليموناضة بالنعناع',2000,'🍹',this)">+</button>
+          <span class="card-icon">🍹</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ليموناضة بالنعناع</div>
+          <div class="card-desc">ليمون طازج مع نعناع منعش</div>
+          <div class="card-foot"><div class="card-price">2،000 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      <div class="card" data-name="ماء" data-price="500">
+        <div class="card-img" style="background:linear-gradient(135deg,#c9842b,#e8a83d)">
+          
+          <button class="add-btn" onclick="addToCart('ماء',500,'💧',this)">+</button>
+          <span class="card-icon">💧</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ماء</div>
+          <div class="card-desc">قنينة ماء</div>
+          <div class="card-foot"><div class="card-price">500 <span>د.ع</span></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+</main>
+
+<footer>
+  <div class="ft-logo">🌯 شاورما الخيال</div>
+  <div style="font-size:13px;color:#888">بغداد - المنصور - شارع الأميرات - مقابل حديقة الزوراء</div>
+  <div style="font-size:13px;color:#888;margin-top:4px">📞 07700000000</div>
+  <div class="dev-sign">© 2026 Suhaib Mohammed — Web Developer · 07838023494</div>
+</footer>
+
+<button class="cart-fab" onclick="openCart()">🛒<span class="cart-count" id="cartCount" style="display:none">0</span></button>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head"><h3>🛒 اطّلع على سلتك</h3><button class="cart-close" onclick="closeCart()">✕</button></div>
+  <div class="cart-scroll" id="cartScroll">
+    <div class="cart-items" id="cartItems"><div class="cart-empty">السلة فارغة — أضف وجباتك المفضلة</div></div>
+    <div class="suggest-wrap" id="suggestWrap" style="display:none">
+      <div class="suggest-title">✨ أكمل طلبك</div>
+      <div class="suggest-row" id="suggestRow"></div>
+    </div>
+    <div class="cart-form" id="cartForm" style="display:none">
+      <div class="cf-field"><label>📝 ملاحظة الطلب</label>
+        <textarea id="fNote" placeholder="اكتب أي ملاحظة للطلب هنا..."></textarea></div>
+      <div class="cf-field"><label>👤 الاسم</label>
+        <input type="text" id="fName" placeholder="اكتب اسمك"></div>
+      <div class="cf-field"><label>📱 رقم الهاتف</label>
+        <input type="tel" id="fPhone" placeholder="اكتب رقم هاتفك"></div>
+      <div class="cf-field"><label>📍 العنوان</label>
+        <input type="text" id="fAddr" placeholder="اكتب عنوانك بالتفصيل"></div>
+    </div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total"><span>المجموع</span><span id="cartTotal">0 د.ع</span></div>
+    <div class="cart-note">🛵 توصيل سريع خلال 30 دقيقة</div>
+    <button class="checkout" onclick="checkout()"><span>📲</span> إرسال الطلب عبر واتساب</button>
+    <a class="checkout-call" href="tel:07700000000"><span>📞</span> اطلب عبر اتصال</a>
+  </div>
+</div>
+
+
+<div class="offers-overlay" id="offersOverlay" onclick="closeOffers()"></div>
+<div class="offers-panel" id="offersPanel">
+  <div class="offers-head"><h3>🔥 عروض شاورما الخيال</h3><button class="offers-close" onclick="closeOffers()">✕</button></div>
+  <div class="offers-sub">عروض حصرية لفترة محدودة — اطلب الآن قبل انتهائها</div>
+  <div class="offers-scroll"><div class="offers-grid">
+        <div class="offer-card" data-name="عرض الخيال الكبير" data-price="9000">
+          <div class="offer-icon">🔥</div>
+          <div class="offer-body"><div class="offer-badge">عرض</div>
+            <div class="offer-name">عرض الخيال الكبير</div><div class="offer-desc">2 شاورما دجاج + بطاطا كبيرة + 2 بيبسي + مقبلات</div>
+            <div class="offer-foot"><div class="offer-price">9،000 <span>د.ع</span></div>
+            <button class="offer-add" onclick="addToCart('عرض الخيال الكبير',9000,'🔥',this)">أضف للسلة</button></div>
+          </div>
+        </div>
+        <div class="offer-card" data-name="عرض العائلة" data-price="18000">
+          <div class="offer-icon">👨‍👩‍👧‍👦</div>
+          <div class="offer-body"><div class="offer-badge">عرض</div>
+            <div class="offer-name">عرض العائلة</div><div class="offer-desc">4 شاورما مكس + صحن بطاطا + 4 مشروبات + سلطة</div>
+            <div class="offer-foot"><div class="offer-price">18،000 <span>د.ع</span></div>
+            <button class="offer-add" onclick="addToCart('عرض العائلة',18000,'👨‍👩‍👧‍👦',this)">أضف للسلة</button></div>
+          </div>
+        </div>
+        <div class="offer-card" data-name="وجبة الطالب" data-price="4500">
+          <div class="offer-icon">🎒</div>
+          <div class="offer-body"><div class="offer-badge">عرض</div>
+            <div class="offer-name">وجبة الطالب</div><div class="offer-desc">شاورما دجاج + بطاطا صغيرة + مشروب</div>
+            <div class="offer-foot"><div class="offer-price">4،500 <span>د.ع</span></div>
+            <button class="offer-add" onclick="addToCart('وجبة الطالب',4500,'🎒',this)">أضف للسلة</button></div>
+          </div>
+        </div>
+        <div class="offer-card" data-name="عرض المشاوي" data-price="14000">
+          <div class="offer-icon">🍢</div>
+          <div class="offer-body"><div class="offer-badge">عرض</div>
+            <div class="offer-name">عرض المشاوي</div><div class="offer-desc">طبق مشاوي مشكل + رز + سلطة + مشروب</div>
+            <div class="offer-foot"><div class="offer-price">14،000 <span>د.ع</span></div>
+            <button class="offer-add" onclick="addToCart('عرض المشاوي',14000,'🍢',this)">أضف للسلة</button></div>
+          </div>
+        </div>
+  </div></div>
+</div>
+
+<div class="bottombar">
+  <a class="bb" href="https://wa.me/9647700000000" target="_blank"><span class="ic">💬</span>واتساب</a>
+  <a class="bb" href="tel:07700000000"><span class="ic">📞</span>اتصال</a>
+  <a class="bb" href="https://maps.google.com/?q=33.3152,44.3661" target="_blank"><span class="ic">📍</span>الموقع</a>
+  <a class="bb" href="javascript:void(0)" onclick="openSocial()"><span class="ic">🔗</span>تواصل</a>
+</div>
+
+<div class="offers-overlay" id="socialOverlay" onclick="closeSocial()" style="z-index:91"></div>
+<div class="social-panel-x" id="socialPanel"></div>
+
+<script>
+const WA="9647700000000";
+let cart={};
+// خريطة تدرّج لون لكل أيقونة (للصورة بالسلة)
+const ICON_GRAD={};
+document.querySelectorAll('.card').forEach(c=>{
+  const ic=c.querySelector('.card-icon').textContent;
+  const g=c.querySelector('.card-img').style.background;
+  if(!ICON_GRAD[ic])ICON_GRAD[ic]=g;
+});
+// قائمة اقتراحات (الإضافات + المشروبات)
+const SUGGESTIONS=[{"name": "بطاطا مقلية", "price": 2000, "icon": "🍟"}, {"name": "بطاطا بالجبن", "price": 3000, "icon": "🧀"}, {"name": "حمص بطحينة", "price": 2000, "icon": "🫓"}, {"name": "سلطة خضراء", "price": 1500, "icon": "🥗"}, {"name": "مقبلات مشكلة", "price": 2500, "icon": "🥗"}, {"name": "بيبسي", "price": 1000, "icon": "🥤"}, {"name": "سفن أب", "price": 1000, "icon": "🥤"}, {"name": "عصير برتقال طازج", "price": 2000, "icon": "🍊"}, {"name": "ليموناضة بالنعناع", "price": 2000, "icon": "🍹"}, {"name": "ماء", "price": 500, "icon": "💧"}];
+function addToCart(name,price,icon,btn){
+  if(cart[name])cart[name].qty++;else cart[name]={price:price,qty:1,icon:icon};
+  renderCart();flyBall(btn);ripple(btn);sparks(btn);
+}
+function changeQty(name,d){if(!cart[name])return;cart[name].qty+=d;if(cart[name].qty<=0)delete cart[name];renderCart();}
+function removeItem(name){delete cart[name];renderCart();}
+function renderCart(){
+  const items=document.getElementById('cartItems');const keys=Object.keys(cart);let count=0,total=0;
+  keys.forEach(k=>{count+=cart[k].qty;total+=cart[k].qty*cart[k].price});
+  const cc=document.getElementById('cartCount');
+  if(count>0){cc.style.display='flex';cc.textContent=count}else{cc.style.display='none'}
+  document.getElementById('cartTotal').textContent=fmt(total)+' د.ع';
+  const sugg=document.getElementById('suggestWrap');const form=document.getElementById('cartForm');
+  if(keys.length===0){
+    items.innerHTML='<div class="cart-empty">السلة فارغة — أضف وجباتك المفضلة</div>';
+    sugg.style.display='none';form.style.display='none';return;
+  }
+  sugg.style.display='block';form.style.display='block';
+  items.innerHTML=keys.map(k=>{
+    const ic=cart[k].icon||'🍽️';const g=ICON_GRAD[ic]||'linear-gradient(135deg,#7a1f2b,#a82a3a)';
+    return `<div class="ci">
+      <div class="ci-img" style="background:${g}">${ic}</div>
+      <div class="ci-info"><div class="ci-name">${k}</div><div class="ci-price">${fmt(cart[k].price)} د.ع</div></div>
+      <div class="ci-qty">
+        <button class="qbtn" onclick="changeQty('${k.replace(/'/g,"\\'")}',1)">+</button>
+        <span class="qnum">${cart[k].qty}</span>
+        <button class="qbtn" onclick="changeQty('${k.replace(/'/g,"\\'")}',-1)">−</button>
+        <button class="ci-del" onclick="removeItem('${k.replace(/'/g,"\\'")}')">✕</button>
+      </div></div>`;
+  }).join('');
+  renderSuggestions();
+}
+function renderSuggestions(){
+  const row=document.getElementById('suggestRow');
+  const avail=SUGGESTIONS.filter(s=>!cart[s.name]);
+  if(avail.length===0){document.getElementById('suggestWrap').style.display='none';return}
+  row.innerHTML=avail.slice(0,8).map(s=>{
+    const g=ICON_GRAD[s.icon]||'linear-gradient(135deg,#c9842b,#e8a83d)';
+    return `<div class="sug-card">
+      <div class="sug-img" style="background:${g}">${s.icon}</div>
+      <div class="sug-body"><div class="sug-name">${s.name}</div>
+      <div class="sug-foot"><span class="sug-price">${fmt(s.price)} د.ع</span>
+      <button class="sug-add" onclick="addToCart('${s.name.replace(/'/g,"\\'")}',${s.price},'${s.icon}',this)">+</button></div></div></div>`;
+  }).join('');
+}
+function fmt(n){return n.toLocaleString('en-US').replace(/,/g,'،')}
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartPanel').classList.add('open')}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartPanel').classList.remove('open')}
+function openOffers(){document.getElementById('offersOverlay').classList.add('open');document.getElementById('offersPanel').classList.add('open')}
+function closeOffers(){document.getElementById('offersOverlay').classList.remove('open');document.getElementById('offersPanel').classList.remove('open')}
+
+// تبديل القسم (التبويبات + البطاقات)
+function showCat(cat){
+  document.querySelectorAll('.menu-section').forEach(s=>s.classList.toggle('show-cat',s.dataset.cat===cat));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.cat===cat));
+  document.querySelectorAll('.cat-card').forEach(c=>c.classList.toggle('active',c.dataset.cat===cat));
+  // تفعيل ظهور البطاقات
+  const sec=document.querySelector('.menu-section.show-cat');
+  if(sec) sec.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'),i*40));
+  // مرر للتبويبات
+  const tb=document.getElementById('tabs');const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.cat===cat);
+  if(t)t.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+}
+function setView(v,btn){
+  const sec=btn.closest('.menu-section');const cards=sec.querySelector('.cards');
+  cards.classList.remove('grid','list');cards.classList.add(v);
+  sec.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+}
+function toggleSearch(){
+  const sb=document.getElementById('searchBar');
+  sb.style.display=sb.style.display==='none'?'block':'none';
+  if(sb.style.display==='block')document.getElementById('search').focus();
+}
+function doSearch(q){
+  q=q.trim().toLowerCase();
+  if(!q){document.querySelectorAll('.card').forEach(c=>c.style.display='');return}
+  // عند البحث، أظهر كل الأقسام وفلتر
+  document.querySelectorAll('.menu-section').forEach(s=>s.classList.add('show-cat'));
+  document.querySelectorAll('.card').forEach(c=>{const n=c.dataset.name.toLowerCase();c.style.display=n.includes(q)?'':'none';c.classList.add('show')});
+  document.querySelectorAll('.menu-section').forEach(s=>{const vis=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none');s.style.display=vis?'block':'none'});
+}
+function checkout(){
+  const keys=Object.keys(cart);if(keys.length===0){alert('السلة فارغة');return}
+  const name=document.getElementById('fName').value.trim();
+  const phone=document.getElementById('fPhone').value.trim();
+  const addr=document.getElementById('fAddr').value.trim();
+  const note=document.getElementById('fNote').value.trim();
+  if(!name||!phone||!addr){alert('رجاءً اكتب الاسم والرقم والعنوان لإتمام الطلب');return}
+  let total=0,msg='*طلب جديد — شاورما الخيال*%0a%0a';
+  keys.forEach(k=>{const t=cart[k].qty*cart[k].price;total+=t;msg+=`▪️ ${k} ×${cart[k].qty} = ${fmt(t)} د.ع%0a`});
+  msg+=`%0a*المجموع: ${fmt(total)} د.ع*%0a🛵 توصيل سريع خلال 30 دقيقة%0a%0a`;
+  msg+=`*الاسم:* ${encodeURIComponent(name)}%0a*الرقم:* ${encodeURIComponent(phone)}%0a*العنوان:* ${encodeURIComponent(addr)}`;
+  if(note)msg+=`%0a*ملاحظة:* ${encodeURIComponent(note)}`;
+  window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
+}
+function flyBall(btn){
+  const r=btn.getBoundingClientRect();const fab=document.querySelector('.cart-fab').getBoundingClientRect();
+  const b=document.createElement('div');b.className='fly';b.style.left=r.left+'px';b.style.top=r.top+'px';document.body.appendChild(b);
+  requestAnimationFrame(()=>{b.style.left=fab.left+18+'px';b.style.top=fab.top+18+'px';b.style.transform='scale(.3)';b.style.opacity='0'});
+  setTimeout(()=>b.remove(),720);
+}
+// نافذة التواصل (إعادة استخدام نمط منبثق)
+function openSocial(){
+  const p=document.getElementById('socialPanel');
+  p.innerHTML=`<div style="position:fixed;bottom:0;left:0;right:0;z-index:101;background:var(--cream);border-radius:26px 26px 0 0;border-top:2px solid var(--gold);padding-bottom:26px;box-shadow:0 -10px 40px rgba(0,0,0,.4)">
+    <div style="padding:18px;display:flex;align-items:center;justify-content:space-between"><h3 style="font-size:19px;font-weight:900;color:var(--wine)">🔗 تابعنا على</h3>
+    <button onclick="closeSocial()" style="background:rgba(122,31,43,.08);border:none;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;color:var(--wine)">✕</button></div>
+    <div style="padding:0 18px;display:flex;flex-direction:column;gap:12px">
+      <a class="social-link insta" href="https://instagram.com/" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;text-decoration:none;color:#fff"><span style="font-size:30px">📷</span><div style="flex:1"><div style="font-weight:900;font-size:17px">انستغرام</div><div style="font-size:13px;opacity:.9">@shawarma_alkhayal</div></div></a>
+      <a class="social-link tiktok" href="https://tiktok.com/" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;text-decoration:none;color:#fff"><span style="font-size:30px">🎵</span><div style="flex:1"><div style="font-weight:900;font-size:17px">تيك توك</div><div style="font-size:13px;opacity:.9">شاهد فيديوهاتنا</div></div></a>
+      <a class="social-link wa" href="https://wa.me/9647700000000" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;text-decoration:none;color:#fff"><span style="font-size:30px">💬</span><div style="flex:1"><div style="font-weight:900;font-size:17px">واتساب</div><div style="font-size:13px;opacity:.9">اطلب الآن مباشرة</div></div></a>
+    </div></div>`;
+  document.getElementById('socialOverlay').classList.add('open');
+}
+function closeSocial(){document.getElementById('socialOverlay').classList.remove('open');document.getElementById('socialPanel').innerHTML=''}
+// (9) مؤشر التمرير
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  document.getElementById('scrollProgress').style.width=(sc*100)+'%';
+});
+// (5) عدّاد الطلبات المتزايد
+let oc=0;const ocTarget=23+Math.floor(Math.random()*15);
+const ocEl=document.getElementById('orderCount');
+const ocTimer=setInterval(()=>{oc++;ocEl.textContent=oc;if(oc>=ocTarget)clearInterval(ocTimer)},60);
+// (10) الوضع الليلي
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+}
+// (3) ripple + نجوم عند الإضافة
+function ripple(btn){
+  const card=btn.closest('.card');if(!card)return;
+  const r=document.createElement('span');r.className='ripple';
+  const rect=card.getBoundingClientRect();const sz=Math.max(rect.width,rect.height);
+  r.style.width=r.style.height=sz+'px';r.style.left=(rect.width/2-sz/2)+'px';r.style.top=(rect.height/2-sz/2)+'px';
+  card.appendChild(r);setTimeout(()=>r.remove(),600);
+}
+function sparks(btn){
+  const r=btn.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;
+  const ems=['✨','⭐','🔥','💫'];
+  for(let i=0;i<5;i++){
+    const s=document.createElement('div');s.className='spark';s.textContent=ems[i%ems.length];
+    s.style.left=cx+'px';s.style.top=cy+'px';
+    s.style.setProperty('--sx',(Math.random()*100-50)+'px');
+    s.style.setProperty('--sy',(-40-Math.random()*50)+'px');
+    document.body.appendChild(s);setTimeout(()=>s.remove(),800);
+  }
+}
+// إظهار أول قسم
+showCat('shawarma');
+</script>
+</body>
+</html>
